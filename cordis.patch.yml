@@ -1,0 +1,15 @@
+# Bundle patch layer for dsh-workspace-orchestrator.
+#
+# Applied AFTER every bundle layer and after the profile's own cordis.patch.yml when this
+# package is listed in dsh.profile.bundles, or wherever the user places the `--patch`
+# overlay on the command line.
+#
+# Inserts exactly one loader entry: the host half of the orchestrator. It registers six
+# tools (scan_plugins / scan_conflicts / manage_workspace_scope / launch | list | stop
+# workspace_instance), listens for `session/created` to drive light single-open mode, and
+# owns no HTTP route, no service and no configuration write of its own. Every failure
+# inside apply() is caught, so this plugin can never be the reason a profile fails to boot.
+
+- insert:
+    - id: dsh-workspace-orchestrator
+      name: 'dsh-workspace-orchestrator'
